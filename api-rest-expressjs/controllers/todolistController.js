@@ -8,7 +8,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
   const id = parseInt(req.params.id, 10)
-  if (!isNaN(id)) {
+  if (isNaN(id)) {
     return res.status(422).send('id incorrect')
   }
   try {

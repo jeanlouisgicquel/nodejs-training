@@ -1,22 +1,6 @@
-const fs = require('fs')
 const todosFile = './api-rest-expressjs/data/todos.json'
 const NotFoundException = require('../exceptions/not-found-exception')
-
-/**
- * Ecrit dans un fichier le contenu data et retourne une promesse
- */
-function writeFile(data) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(todosFile, data, (err) => {
-      if (err) {
-        reject(err)
-        return
-      }
-
-      resolve()
-    })
-  })
-}
+const { readFile, writeFile } = require('../utils')
 
 /**
  * Recherche un todo ayant l'id passé en paramètre
@@ -37,18 +21,7 @@ function findTodoById(id, todos) {
  * Récupère toutes les todos sauvegardées
  * @returns {Array} todos sauvegardées
  */
-exports.fetchTodos = async () =>
-  new Promise((resolve, reject) => {
-    fs.readFile(todosFile, (err, data) => {
-      if (err) {
-        reject(err)
-        return
-      }
-
-      const todos = JSON.parse(data)
-      resolve(todos)
-    })
-  })
+exports.fetchTodos = async () => readFile(todosFile)
 
 /**
  * Récupère une todo ayant l'id passé en paramètre
@@ -73,7 +46,7 @@ exports.storeTodo = async (todo) => {
   }
   todos.push(todoToStore)
   const todosJson = JSON.stringify(todos, null, 2)
-  await writeFile(todosJson)
+  await writeFile(todosFile, todosJson)
   return nextTodoId
 }
 
@@ -92,7 +65,7 @@ exports.updateTodo = async (id, todo) => {
   }
   const todoIdx = todos.findIndex((t) => t.id === id)
   todos.splice(todoIdx, 1, todoFound)
-  await writeFile(JSON.stringify(todos, null, 2))
+  await writeFile(todosFile, JSON.stringify(todos, null, 2))
 }
 
 /**
@@ -107,5 +80,5 @@ exports.destroyTodo = async (todo) => {
     null,
     2
   )
-  await writeFile(todosJson)
+  await writeFile(todosFile, todosJson)
 }
