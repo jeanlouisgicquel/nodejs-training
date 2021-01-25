@@ -3,21 +3,37 @@
 @port = 3000
 @host = {{protocol}}://{{hostname}}:{{port}}
 @contentType = application/json
+@tokenUser = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6Ikx1Y2t5IEx1a2UiLCJlbWFpbCI6ImxsQGVtYWlsLmNvbSIsImlhdCI6MTYxMTU4ODkyNH0.LtY3WbPGfXrTVCFrn4oGjj2CKO6KAhkjVkqYDMDDzCY
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJuYW1lIjoiTWEgRGFsdG9uIiwiZW1haWwiOiJtZEBlbWFpbC5jb20iLCJpYXQiOjE2MTE1ODg5OTF9.CTqUinbiOxfWpqXW44XN9wGPtk7kf_eLOgF24WV0oAw
+@token = {{ tokenAdmin }}
 
 ###
 GET {{host}}/ HTTP/1.1
 
-# Test
+# Auth
 ###
-GET {{host}}/user/0 HTTP/1.1
+POST {{host}}/auth/register HTTP/1.1
+###
+POST {{host}}/auth/login HTTP/1.1
+Content-Type: {{contentType}} 
+
+{
+  "email": "md@email.com",
+  "password": "old"
+}
+###
+POST {{host}}/auth/logout HTTP/1.1
 
 # Todos
 ###
 GET {{host}}/todos/ HTTP/1.1
+Authorization: Bearer {{token}}
 ###
-GET {{host}}/todos/201 HTTP/1.1
+GET {{host}}/todos/21 HTTP/1.1
+Authorization: Bearer {{token}}
 ###
 POST {{host}}/todos/ HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: {{contentType}} 
 
 {
@@ -27,13 +43,15 @@ Content-Type: {{contentType}}
 }
 ###
 PUT {{host}}/todos/201 HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: {{contentType}} 
 
 {
   "id": 65498,
   "userId": 999,
-  "title": "Todo modifiée !",
+  "title": "Todo modifiée !!!",
   "completed": true
 }
 ###
-DELETE {{host}}/todos/202 HTTP/1.1
+DELETE {{host}}/todos/23 HTTP/1.1
+Authorization: Bearer {{token}}

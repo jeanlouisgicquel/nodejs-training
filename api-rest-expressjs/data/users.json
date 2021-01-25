@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Joe Dalton",
+    "email": "jd@email.com",
+    "password": "$2a$10$emGbFbTUrieLrUG5e.Za5ekWRnD44C73bgGL99jD41LKr4w96O14e",
+    "plainpassword": "pass"
+  },
+  {
+    "id": 2,
+    "name": "Lucky Luke",
+    "email": "ll@email.com",
+    "password": "$2a$10$xZSCmwdq1QKYCIeFbcb/Yeun0OZsFQIEPA57SS.6lWfb9amxWIpfG",
+    "plainpassword": "fast"
+  },
+  {
+    "id": 999,
+    "name": "Ma Dalton",
+    "email": "md@email.com",
+    "password": "$2a$10$Af/UopvmSmLyAx75OILbKOIARIK8U5MTMWU8lY.daeTXBasmpYnjS",
+    "plainpassword": "old"
+  }
+]

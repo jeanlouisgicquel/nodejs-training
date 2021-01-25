@@ -1,4 +1,5 @@
 const fs = require('fs')
+const bcrypt = require('bcryptjs')
 
 /**
  * Ecrit dans un fichier le contenu data et retourne une promesse
@@ -27,3 +28,13 @@ exports.readFile = (file) =>
       resolve(todos)
     })
   })
+
+exports.hashPassword = (password) => {
+  const salt = bcrypt.genSaltSync(10)
+  const hash = bcrypt.hashSync(password, salt)
+  return hash
+}
+
+exports.checkPassword = (password, passwordHashed) => {
+  return bcrypt.compareSync(password, passwordHashed)
+}

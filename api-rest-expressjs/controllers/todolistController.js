@@ -2,7 +2,12 @@ const NotFoundException = require('../exceptions/not-found-exception')
 const TodoListRepository = require('../repositories/todoListRepository')
 
 exports.index = async (req, res) => {
-  const todos = await TodoListRepository.fetchTodos()
+  const isAdmin = req.user.id === 999
+  const todos = isAdmin
+    ? await TodoListRepository.fetchTodos()
+    : await TodoListRepository.fetchTodosBy({
+        userId: req.user.id,
+      })
   res.json(todos)
 }
 
@@ -11,8 +16,14 @@ exports.show = async (req, res) => {
   if (isNaN(id)) {
     return res.status(422).send('id incorrect')
   }
+  const isAdmin = req.user.id === 999
   try {
-    const todo = await TodoListRepository.fetchTodoById(id)
+    const todo = isAdmin
+      ? await TodoListRepository.fetchTodoById(id)
+      : await TodoListRepository.fetchTodoBy({
+          userId: req.user.id,
+          id,
+        })
     res.json(todo)
   } catch (error) {
     const status = error instanceof NotFoundException ? 404 : 500
@@ -32,6 +43,7 @@ exports.store = async (req, res) => {
 
 exports.update = async (req, res) => {
   const id = parseInt(req.params.id, 10)
+  const isAdmin = req.user.id === 999
   if (
     req.body === null ||
     req.body === undefined ||
@@ -58,6 +70,13 @@ exports.update = async (req, res) => {
   }
 
   try {
+    if (!isAdmin) {
+      // Si le user n'est pas admin il ne peut modifier que ses todos
+      await TodoListRepository.fetchTodoBy({
+        userId: req.user.id,
+        id,
+      })
+    }
     await TodoListRepository.updateTodo(id, todo)
     res.send()
   } catch (error) {
@@ -68,8 +87,14 @@ exports.update = async (req, res) => {
 
 exports.destroy = async (req, res) => {
   const id = parseInt(req.params.id, 10)
+  const isAdmin = req.user.id === 999
   try {
-    const todo = await TodoListRepository.fetchTodoById(id)
+    const todo = isAdmin
+      ? await TodoListRepository.fetchTodoById(id)
+      : await TodoListRepository.fetchTodoBy({
+          userId: req.user.id,
+          id,
+        })
     await TodoListRepository.destroyTodo(todo)
     res.status(200).send()
   } catch (error) {

@@ -13,15 +13,37 @@ function findTodoById(id, todos) {
   if (todosFiltered.length === 0) {
     throw new NotFoundException()
   }
-
   return todosFiltered[0]
+}
+
+const findTodosByUserId = (userId, todos) =>
+  todos.filter((t) => t.userId === userId)
+
+function criteriaFunction(criteria) {
+  return (t) => {
+    for (const key in criteria) {
+      if (t[key] === undefined || t[key] != criteria[key]) {
+        return false
+      }
+    }
+    return true
+  }
 }
 
 /**
  * Récupère toutes les todos sauvegardées
  * @returns {Array} todos sauvegardées
  */
-exports.fetchTodos = async () => readFile(todosFile)
+exports.fetchTodos = async () => await readFile(todosFile)
+
+/**
+ * Récupère toutes les todos sauvegardées du user passé en paramètre
+ * @returns {Array} todos sauvegardées du user
+ */
+exports.fetchTodosByUser = async (user) => {
+  const todos = await this.fetchTodos()
+  return findTodosByUserId(user.id, todos)
+}
 
 /**
  * Récupère une todo ayant l'id passé en paramètre
@@ -30,6 +52,28 @@ exports.fetchTodos = async () => readFile(todosFile)
 exports.fetchTodoById = async (id) => {
   const todos = await this.fetchTodos()
   return findTodoById(id, todos)
+}
+
+/**
+ * Récupère une liste de todos ayant les critères passés en paramètre
+ * @param {object} criteria critères de recherche
+ */
+exports.fetchTodosBy = async (criteria) => {
+  const todos = await this.fetchTodos()
+  return todos.filter(criteriaFunction(criteria))
+}
+
+/**
+ * Récupère une todo ayant les critères passés en paramètre
+ * @param {object} criteria critères de recherche
+ */
+exports.fetchTodoBy = async (criteria) => {
+  const todos = await this.fetchTodos()
+  const todo = todos.find(criteriaFunction(criteria))
+  if (todo === undefined) {
+    throw new NotFoundException()
+  }
+  return todo
 }
 
 /**
