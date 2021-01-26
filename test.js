@@ -1,4 +1,4 @@
-const { hashPassword, checkPassword } = require('./api-rest-expressjs/utils')
+const { hashPassword, checkPassword } = require('./server/utils')
 const bcrypt = require('bcryptjs')
 
 console.log(hashPassword('old'))

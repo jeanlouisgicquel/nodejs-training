@@ -27,3 +27,13 @@ Les utilisateurs authentifiés auront accès uniquement à leurs todos.
 - POST : `/auth/register`
 - POST : `/auth/login`
 - POST : `/auth/logout`
+
+## Etape 3
+
+Ajout d'un front permettant de se connecter, d'afficher ses todos et de les modifier
+
+### Routes
+
+- POST : `/auth/register`
+- POST : `/auth/login`
+- POST : `/auth/logout`

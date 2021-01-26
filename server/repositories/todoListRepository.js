@@ -1,4 +1,4 @@
-const todosFile = './api-rest-expressjs/data/todos.json'
+const todosFile = './data/todos.json'
 const NotFoundException = require('../exceptions/not-found-exception')
 const { readFile, writeFile } = require('../utils')
 

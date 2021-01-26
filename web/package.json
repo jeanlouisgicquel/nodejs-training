@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "dev": "snowpack dev",
+    "build": "snowpack build",
+    "lint": "eslint src",
+    "test": "echo \"This template does not include a test runner by default.\" && exit 1"
+  },
+  "devDependencies": {
+    "@snowpack/plugin-svelte": "^3.5.2",
+    "snowpack": "^3.0.1"
+  },
+  "dependencies": {
+    "svelte": "^3.32.0",
+    "svelte-routing": "^1.5.0"
+  }
+}

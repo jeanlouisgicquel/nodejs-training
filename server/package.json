@@ -1,13 +1,14 @@
 {
-  "name": "nodejs-training",
+  "name": "nodejs-training-server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint . --fix",
-    "dev": "nodemon ./api-rest-expressjs/server.js"
+    "dev": "nodemon",
+    "lint": "eslint ."
   },
   "devDependencies": {
+    "autoprefixer": "^10.2.3",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1"
   }

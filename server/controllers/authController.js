@@ -19,10 +19,14 @@ exports.login = async (req, res) => {
       password
     )
     const accessToken = jwt.generateAccessToken(user)
+    console.log('accessToken', accessToken)
     res.json({ accessToken })
   } catch (error) {
-    console.error(error?.message)
-    res.sendStatus(error instanceof NotFoundException ? 401 : 500)
+    const message = error?.message || 'Error'
+    console.error('AuthController.login:', message)
+    res.status(error instanceof NotFoundException ? 401 : 500).send({
+      message,
+    })
   }
 }
 

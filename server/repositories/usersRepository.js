@@ -1,6 +1,6 @@
-const usersFile = './api-rest-expressjs/data/users.json'
+const usersFile = './data/users.json'
 const NotFoundException = require('../exceptions/not-found-exception')
-const { readFile, hashPassword, checkPassword } = require('../utils')
+const { readFile, checkPassword } = require('../utils')
 
 /**
  * Recherche un user ayant l'id passé en paramètre
