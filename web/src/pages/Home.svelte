@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte'
-  import { navigate } from 'svelte-routing'
+  import { Link, navigate } from 'svelte-routing'
   import * as Api from '../api'
   import TodoList from '../components/TodoList.svelte'
 
@@ -13,6 +13,7 @@
     const token = localStorage.getItem('token')
     if (token === null || token === undefined) {
       navigate('/login', { replace: true })
+      return
     }
 
     todos = await Api.getTodos()
@@ -37,7 +38,8 @@
   }
 </script>
 
-<div class="relative h-32 w-32">
+<div class="flex relative">
+  <Link to="/todo-list-realtime" class="border p-1">Temps Réel</Link>
   <button
     class="absolute top-0 right-0 border bg-blue-500 p-2 text-white"
     on:click={handleLogout}> Déconnexion </button>

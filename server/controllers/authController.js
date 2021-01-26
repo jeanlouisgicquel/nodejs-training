@@ -19,7 +19,6 @@ exports.login = async (req, res) => {
       password
     )
     const accessToken = jwt.generateAccessToken(user)
-    console.log('accessToken', accessToken)
     res.json({ accessToken })
   } catch (error) {
     const message = error?.message || 'Error'

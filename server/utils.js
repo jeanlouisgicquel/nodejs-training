@@ -29,6 +29,24 @@ exports.readFile = (file) =>
     })
   })
 
+exports.getBearerToken = (authorizationHeaders) => {
+  if (authorizationHeaders === null || authorizationHeaders === undefined) {
+    throw 'No authorization headers'
+  }
+
+  const authToken = authorizationHeaders.toString().trim()
+  if (!authToken.toLowerCase().includes('bearer')) {
+    throw 'No valid authorization headers, expected Bearer token'
+  }
+
+  const [, token] = authToken.split(' ')
+  if (token === undefined) {
+    throw 'No valid authorization token, expected token value after Bearer'
+  }
+
+  return token
+}
+
 exports.hashPassword = (password) => {
   const salt = bcrypt.genSaltSync(10)
   const hash = bcrypt.hashSync(password, salt)

@@ -37,3 +37,11 @@ Ajout d'un front permettant de se connecter, d'afficher ses todos et de les modi
 - POST : `/auth/register`
 - POST : `/auth/login`
 - POST : `/auth/logout`
+
+## Etape 4
+
+Ajout d'une page todo list identique en utilisant cette fois-ci le temps réel.
+
+Une même todo list doit être modifiée en même temps sans rechargement explicite du client.
+
+Utilisation du protocole websocket (ws)
